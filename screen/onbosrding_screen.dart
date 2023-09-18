@@ -1,5 +1,7 @@
-//flutter pub add google_fonts
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
+
 
 
 
@@ -28,62 +30,69 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     super.dispose();
   }
 
+  
+
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              Expanded(
-                child: PageView.builder(
-                  itemCount: demoData.length,
-                  controller: _pageController,
-                  onPageChanged: (index) {
-                    setState(() {
-                      _pageIndex = index;
-                    });
-                  },
-                  itemBuilder: (context, index) => OnboardWidget(
-                    image: demoData[index].image,
-                    title: demoData[index].title,
-                    description: demoData[index].description
-                  ),
-                ),
-              ),
-              Row(
-                children: [
-                  ...List.generate(
-                    demoData.length,
-                    (index) => Padding(
-                      padding: const EdgeInsets.only(right: 4),
-                      child: DotIndicator(isActive: index == _pageIndex),
+    return Container(
+      color: const Color.fromARGB(255, 238, 152, 185),
+      child: Scaffold(
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                Expanded(
+                  child: PageView.builder(
+                    itemCount: demoData.length,
+                    controller: _pageController,
+                    onPageChanged: (index) {
+                      setState(() {
+                        _pageIndex = index;
+                      });
+                    },
+                    itemBuilder: (context, index) => OnboardWidget(
+                      image: demoData[index].image,
+                      title: demoData[index].title,
+                      description: demoData[index].description, 
+                      backgroundColor: demoData[index].backgroundColor,
                     )
                   ),
-                  const Spacer(),
-                  SizedBox(
-                    height: 60,
-                    width: 60,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        _pageController.nextPage(
-                          curve: Curves.ease, 
-                          duration: const Duration(milliseconds: 300));
-                      },
-                      style: ElevatedButton.styleFrom(
-                        shape: const CircleBorder(),
-                      ),
-                      child: Icon(Icons.arrow_forward
+                ),
+                Row(
+                  children: [
+                    ...List.generate(
+                      demoData.length,
+                      (index) => Padding(
+                        padding: const EdgeInsets.only(right: 4),
+                        child: DotIndicator(isActive: index == _pageIndex),
+                      )
+                    ),
+                    const Spacer(),
+                    SizedBox(
+                      height: 60,
+                      width: 60,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          _pageController.nextPage(
+                            curve: Curves.ease, 
+                            duration: const Duration(milliseconds: 300));
+                        },
+                        style: ElevatedButton.styleFrom(
+                          shape: const CircleBorder(),
+                        ),
+                        child: const Icon(Icons.arrow_forward
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-            ],
+                  ],
+                ),
+              ],
+            ),
           ),
-        ),
-      )
+        )
+      ),
     );
   }
 }
@@ -111,78 +120,94 @@ class DotIndicator extends StatelessWidget {
 }
 
 class Onboard {
-  final String image, title, description;
+  final String  image, title, description;
+  final Color backgroundColor;
 
-  Onboard({
+  Onboard( {
     required this.image,
     required this.title,
     required this.description,
+    required this.backgroundColor
   });
 }
 
 final List<Onboard> demoData = [
   Onboard(
-    image: 'assets/img/dog_1.jpg',
-    title: "So CUTE!",
-    description: "You better not harm this puppy!"
+    backgroundColor: const Color.fromARGB(255, 231, 218, 179),
+    image: 'lib/assets/image/CutOut.png',
+    title: "WELCOME!",
+    description: "**Created by มากาLong**"
   ),
   Onboard(
-    image: 'assets/img/dog_2.jpg',
-    title: "Nice cloth you are wearing",
-    description: "Did you steal from someone?"
+    backgroundColor: const Color.fromARGB(255, 236, 128, 170),
+    image: 'lib/assets/image/Fuyu.png',
+    title: "Fuyu Kimono Form",
+    description: "**Created by มากาLong**"
   ),
   Onboard(
-    image: 'assets/img/dog_3.jpg',
-    title: "What are you looking at!?",
-    description: "Sit there and never look back."
+    backgroundColor: const Color.fromARGB(255, 165, 193, 253),
+    image: 'lib/assets/image/haran1.png',
+    title: "Haran Origin Form",
+    description: "**Created by มากาLong**"
   ),
   Onboard(
-    image: 'assets/img/cat_1.jpg',
-    title: "There is a cat among us!",
-    description: "Anyway."
+    backgroundColor: const Color.fromARGB(255, 173, 133, 238),
+    image: 'lib/assets/image/haran2.png',
+    title: "Haran Yukata Form ",
+    description: "**Created by มากาLong**"
   ),
   Onboard(
-    image: 'assets/img/dog_4.jpg',
-    title: "What the duck are you?",
-    description: "...elf?"
+    backgroundColor: const Color.fromARGB(255, 250, 183, 95),
+    image: 'lib/assets/image/Sedona.png',
+    title: "Sedona Idol Form",
+    description: "**Created by มากาLong**"
   ),
 ];
+
+
 
 class OnboardWidget extends StatelessWidget {
   const OnboardWidget({
     Key? key,
     required this.image,
     required this.title,
-    required this.description,
+    required this.description, 
+    required this.backgroundColor,
   }) : super(key: key);
 
   final String image, title, description;
+  final Color backgroundColor;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const Spacer(),
-        Image.asset(
-          image,
-          height: 250,
-        ),
-        const Spacer(),
-        Text(
-          title,
-          textAlign: TextAlign.center,
-          style: Theme.of(context)
-          .textTheme
-          .headlineSmall
-          ?.copyWith(fontWeight: FontWeight.w500),
-        ),
-        const SizedBox(height: 16),
-        Text(
-          description,
-          textAlign: TextAlign.center,
-        ),
-        const Spacer(),
-      ],
+    return Container(
+      color: backgroundColor,
+      child: Column(
+        children: [
+          const Spacer(),
+          Image.asset(
+            image,
+            height: 600,
+          ),
+          const Spacer(),
+          Text(
+            title,
+            textAlign: TextAlign.center,
+            style: Theme.of(context)
+            .textTheme
+            .headlineSmall
+            ?.copyWith(fontWeight: FontWeight.w500),
+          ),
+          const SizedBox(height: 16),
+          Text(
+            description,
+            textAlign: TextAlign.center,
+          ),
+          const Spacer(),
+    
+          
+        ],
+      ),
     );
   }
 }
